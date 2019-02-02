@@ -25,8 +25,7 @@ class Main():
         else:
             tasks = user.search_tasks(todoist.Query.OVERDUE)
         for task in tasks:
-            lib.parse_date(task.due_date_utc)
-            #print(str(task.id) + ' ' + task.content + ' ' + str(task.due_date_utc))
+            print(str(task.id) + ' ' + str(lib.parse_date(task.due_date_utc)) + ' ' + task.content)
     
     # add new task
     # @param self
@@ -78,9 +77,7 @@ class Library():
 
     def parse_date(self, date):
         from datetime import datetime, timedelta
-        print(date)
         result_date = datetime.strptime(date, '%a %d %b %Y %H:%M:%S +0000') + timedelta(hours=9)
-        print(str(result_date))
         return result_date
 
 
