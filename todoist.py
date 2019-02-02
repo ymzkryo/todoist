@@ -18,6 +18,7 @@ class Main():
     # @param user
     # @param args_list
     def get_tasks(self, user, args_list):
+        import datetime
         if (len(args_list) != 0):
             start_date = args_list[0]
             end_date = args_list[1]
@@ -25,7 +26,16 @@ class Main():
         else:
             tasks = user.search_tasks(todoist.Query.OVERDUE)
         for task in tasks:
-            print(str(task.id) + ' ' + str(lib.parse_date(task.due_date_utc)) + ' ' + task.content)
+            result = ''
+            due_date_jst = lib.parse_date(task.due_date_utc)
+            now = datetime.datetime.today()
+            if (now > due_date_jst):
+                result = '*'
+            else:
+                result = ' '
+            result += str(task.id) + ' ' + str(due_date_jst) + ' ' + task.content
+            #print(str(task.id) + ' ' + str(lib.parse_date(task.due_date_utc)) + ' ' + task.content)
+            print(result)
     
     # add new task
     # @param self
