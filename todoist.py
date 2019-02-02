@@ -21,12 +21,11 @@ class Main():
         if (len(args_list) != 0):
             start_date = args_list[0]
             end_date = args_list[1]
+            tasks = user.search_tasks(start_date, end_date)
         else:
-            start_date = 'today'
-            end_date = 'tomorrow'
-        tasks = user.search_tasks(start_date, end_date)
+            tasks = user.search_tasks(todoist.Query.OVERDUE)
         for task in tasks:
-            print(task.content + ' ' + str(task.id) + ' ' + str(task.due_date_utc) + ' ' + task.date_string)
+            print(str(task.id) + ' ' + task.content + ' ' + str(task.due_date_utc))
     
     # add new task
     # @param self
@@ -63,7 +62,7 @@ class Library():
         import sys
         usage = 'Usage: python FILE [--add] [--list <start_date> <end_date>] [--complete] [--help]'.format(__file__)
         parser = argparse.ArgumentParser(usage = usage)
-        parser.add_argument('-l', '--list', nargs=2, action='append', help='--list start_date end_date')
+        parser.add_argument('-l', '--list', nargs='*', action='append', help='--list start_date end_date')
         parser.add_argument('-a', '--add', nargs='*', action='append', help='show add message')
         #parser.add_argument('-c', '--complete', nargs='*', action='append', help='show complete message')
         args = parser.parse_args()
@@ -87,11 +86,9 @@ if __name__ == '__main__':
             main.add_task(user, args_list)
     if (args.list):
         args_list = lib.parse_argment_list(args.list)
-        if (len(args_list) != 0):
-            print('hoge')
         #main.get_todays_tasks(user)
         main.get_tasks(user, args_list)
-    if (args.complete):
-        args_list = lib.parse_argment_list(args.complete)
+    #if (args.complete):
+        #args_list = lib.parse_argment_list(args.complete)
         #if (len(args_list) != 0):
             #main.complete_task(user, args_list)
