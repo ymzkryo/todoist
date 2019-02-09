@@ -1,0 +1,36 @@
+#!/usr/bin/env python
+# _*_ coding:utf-8 _*_
+
+from lib.certification import Certification
+from todoist import Todoist
+from lib.argument import Argument
+
+class Main():
+
+    def main(self):
+        """
+        main function
+        app start
+
+        """
+        API_TOKEN = certification.load_json()
+        if not API_TOKEN:
+            print('[WARN]:Please set the API token in config.json')
+        user = todoist.login(API_TOKEN)
+        projects = todoist.get_projects(user)
+        args = argument.get_argument()
+        print(args)
+        if args.function.lower() == 'add':
+            todoist.add_task(args.content, projects, project=args.project, due=args.due)
+        elif args.function.lower() == 'list':
+            todoist.get_tasks(user)
+        elif args.function.lower() == 'complete':
+            todoist.complete_task(args.content, projects, project=args.project)
+
+
+if __name__ == '__main__':
+    certification = Certification()
+    todoist = Todoist()
+    argument = Argument()
+    main = Main()
+    main.main()
