@@ -13,19 +13,35 @@ class Todoist():
     def get_projects(self, user):
         return  user.get_projects()
 
-    def get_tasks(self, user):
-        tasks =  user.get_tasks()
-        now = date.get_now()
+    def get_tasks(self, user, query=None):
+        if query is None:
+            tasks = user.get_tasks()
+            print('ALL TASK:')
+            print('----------------------------------------')
+        else:
+            print('OVER DUE & TODAY\'s TASK:')
+            print('----------------------------------------')
+            now = date.get_now()
+            tasks =  user.search_tasks(todoist.Query.OVERDUE, todoist.Query.TODAY)
         for task in tasks:
-            target_date = task.due_date_utc
-            if not target_date is None:
-                fuga = date.str_to_date(target_date)
-                print(date.date_to_str(date.utc_to_jst(fuga)) + ' ' + task.content)
-            #print(str(task.id) + ' ' + task.project.name + ' ' + task.content + ' ' + date.date_to_str(task.due_date_utc, '%Y-%m-%D %H:%M:%S'))
+            if not task.due_date_utc is None:
+                due_date_jst = date.date_to_str(date.utc_to_jst(date.str_to_date(task.due_date_utc)))
+            else:
+                due_date_jst = ''
+            print(str(task.id) + ' ' + task.project.name + ' ' + task.content + ' ' + due_date_jst)
+
     def add_task(self, content, projects, project=None, due=None):
         print(content)
         return
 
-    def complete_task(self, content, projects, project=None):
-        print(content)
+    def complete_task(self, user, content):
+        tasks = user.get_tasks()
+        for task in tasks:
+            if task.id == int(content):
+                print('project_name: ' + task.project.name + ' task_name: ' + task.content)
+                proceed = input('Proceed (y/n)?')
+                if proceed is 'y':
+                    task.complete()
+                elif proceed is 'n':
+                    print('canceled')
         return

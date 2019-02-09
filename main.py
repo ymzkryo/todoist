@@ -17,15 +17,15 @@ class Main():
         if not API_TOKEN:
             print('[WARN]:Please set the API token in config.json')
         user = todoist.login(API_TOKEN)
+        user.sync()
         projects = todoist.get_projects(user)
         args = argument.get_argument()
-        print(args)
         if args.function.lower() == 'add':
             todoist.add_task(args.content, projects, project=args.project, due=args.due)
         elif args.function.lower() == 'list':
-            todoist.get_tasks(user)
+            todoist.get_tasks(user, args.query)
         elif args.function.lower() == 'complete':
-            todoist.complete_task(args.content, projects, project=args.project)
+            todoist.complete_task(user, args.content)
 
 
 if __name__ == '__main__':
