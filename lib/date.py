@@ -1,7 +1,14 @@
 from datetime import datetime, timedelta, timezone
 from pytz import timezone
 class Date():
+    """
+    TODOIST_DEFAULT_DATE_FORMAT
+    """
     TODOIST_DEFAULT_DATE_FORMAT = '%a %d %b %Y %H:%M:%S %z'
+
+    """
+    DATE_FORMAT
+    """
     DATE_FORMAT = '%Y-%m-%d %H:%M:%S%z'
 
     def get_now(self):
@@ -57,7 +64,6 @@ class Date():
         -------
         date : string
         """
-
         return utc_time.astimezone(timezone('Asia/Tokyo'))
 
     def jst_to_utc(self, jst_time):
@@ -72,5 +78,4 @@ class Date():
         -------
         date : string
         """
-
         return jst_time.astimezone(timezone('UTC'))
