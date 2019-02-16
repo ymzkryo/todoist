@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # _*_ coding:utf-8 _*_
 
-from dog import dog
 from lib.certification import Certification
 from todoist import Todoist
 from lib.argument import Argument
@@ -15,8 +14,6 @@ class Main():
         app start
 
         """
-        dog = Dog()
-        dog.show_name()
         API_TOKEN = certification.load_json()
         if not API_TOKEN:
             print('[WARN]:Please set the API token in config.json')
@@ -33,7 +30,6 @@ class Main():
         elif args.function.lower() == 'complete':
             todoist.complete_task(user, args.content)
             user.update()
-
 
 if __name__ == '__main__':
     certification = Certification()
