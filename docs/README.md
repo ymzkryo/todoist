@@ -1,4 +1,4 @@
-# py-todoist-cli
+# todoist
 
 This will do the task list of todoist.  
 It works in the CLI.  
