@@ -9,7 +9,7 @@ class Certification:
             json file api_token
         """
         import json
-        f = open('./config.json', 'r')
+        f = open('./todoist/config.json', 'r')
         json_data = json.load(f)
         f.close()
         return json_data['api_token']
